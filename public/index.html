@@ -27,27 +27,33 @@
             // entity factory function
             var user = nga.entity('user').identifier(nga.field('_id')).label('Users');
         
+             user.creationView().fields([
+                nga.field('bnet.name').label('BNET name'),
+                nga.field('bnet.id').label('BNET id'), 
+            ]);
 
             user.listView()
                 .title('Users').fields([
-                    nga.field('bnet.name').label('BNET name'),
-                    nga.field('bnet.id').label('BNET id'),
-                    nga.field('bnet.token').label('BNET token'),
-                    nga.field('token').label('token'),
-                    nga.field('_id').label('id').editable(false)
+                    user.creationView().fields(), // reuse fields from another view in another order
+                    nga.field('_id').label('id').editable(false),
+                    nga.field('updated', 'date').label('updated').format('MM/dd HH:mm').editable(false),
+                    nga.field('created', 'date').label('created').format('MM/dd HH:mm').editable(false),
                 ])
                 .listActions(['show', 'edit', 'delete']);
 
-            user.showView().fields([
-                user.listView().fields(), // reuse fields from another view in another order
-            ]);
-            user.creationView().fields([
-                user.listView().fields(), // reuse fields from another view in another order
-            ]);
             user.editionView().fields([
                 user.listView().fields(), // reuse fields from another view in another order
+                nga.field('bnet.token').label('BNET token'),
+                nga.field('token').label('token'),
             ]);
 
+            user.showView().fields([
+                user.listView().fields(), // reuse fields from another view in another order
+                nga.field('token').label('token').editable(false),
+                nga.field('bnet.token').label('BNET token').editable(false),
+            ]);
+
+           
             admin.addEntity(user);
 
             // menu factory function
