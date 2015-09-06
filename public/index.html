@@ -45,7 +45,7 @@
                 user.listView().fields(), // reuse fields from another view in another order
                 nga.field('bnet.token').label('BNET token'),
                 nga.field('token').label('token'),
-            ]);
+            ]).title('Edit {{ entry.values["bnet.name"] }}');
 
             user.showView().fields([
                 user.listView().fields(), // reuse fields from another view in another order
