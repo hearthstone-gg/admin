@@ -74,7 +74,9 @@
                   { value: 'WIN', label: 'Win' },
                   { value: 'LOSS', label: 'Loss' },
                   { value: 'TIE', label: 'Tie' },
-                ])
+                ]),
+                nga.field('name').label('reporter'),
+                nga.field('opponentName').label('opponent'),
             ]);
 
             game.listView()
