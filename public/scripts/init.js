@@ -20,3 +20,17 @@ myApp.config(['NgAdminConfigurationProvider', 'RestangularProvider', function(Ng
         return { params: params };
     });
 }]);
+
+// var user = prompt('User');
+// var pass = prompt('Password');
+
+/* DEV ONLY */
+var user = 'admin';
+var pass = 'pass';
+
+myApp.config(function(RestangularProvider) {
+    var login = user,
+        password = pass,
+        token = window.btoa(login + ':' + password);
+    RestangularProvider.setDefaultHeaders({'Authorization': 'Basic ' + token});
+});
