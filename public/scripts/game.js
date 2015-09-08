@@ -1,10 +1,8 @@
 myApp.config(['NgAdminConfigurationProvider', function(NgAdminConfigurationProvider) {
     var nga = NgAdminConfigurationProvider;
 
-    var game = nga.entity('game').identifier(nga.field('_id')).label('Games');
-
     var reporterId = nga.field('reporterId', 'reference').label('Player ID')
-        .targetEntity(adminApp.getEntity('user')) // Select a target Entity
+        .targetEntity(user) // Select a target Entity
         .targetField(nga.field('_id'));
 
     game.creationView().fields([

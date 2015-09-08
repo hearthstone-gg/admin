@@ -1,4 +1,3 @@
-console.log('starting')
 require('pmx').init();
 var argv = require('yargs').argv;
 

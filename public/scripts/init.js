@@ -20,7 +20,7 @@ myApp.config(['NgAdminConfigurationProvider', 'RestangularProvider', function(Ng
         return { params: params };
     });
 
-     RestangularProvider.addFullRequestInterceptor(function(element, operation, what, url, headers, params, httpConfig) {
+    RestangularProvider.addFullRequestInterceptor(function(element, operation, what, url, headers, params, httpConfig) {
         if (operation == 'getList') {
             params.sort = (params._sortDir === 'ASC' ? '' : '-') + params._sortField;
 
@@ -29,18 +29,34 @@ myApp.config(['NgAdminConfigurationProvider', 'RestangularProvider', function(Ng
         }
         return { params: params };
     });
+
+    RestangularProvider.addFullRequestInterceptor(function(element, operation, what, url, headers, params, httpConfig) {
+        if (operation == 'getList') {
+            if (params._filters) {
+                for (var filter in params._filters) {
+                    params[filter] = params._filters[filter];
+                }
+                delete params._filters;
+            }
+        }
+        return { params: params };
+    });
+
+
+    game = nga.entity('game').identifier(nga.field('_id')).label('Games');
+    user = nga.entity('user').identifier(nga.field('_id')).label('Users');
 }]);
 
-// var user = prompt('User');
-// var pass = prompt('Password');
+// var u = prompt('User');
+// var p = prompt('Password');
 
 /* DEV ONLY */
-var user = 'admin';
-var pass = 'pass';
+var u = 'admin';
+var p = 'pass';
 
 myApp.config(function(RestangularProvider) {
-    var login = user,
-        password = pass,
+    var login = u,
+        password = p,
         token = window.btoa(login + ':' + password);
     RestangularProvider.setDefaultHeaders({'Authorization': 'Basic ' + token});
 });
