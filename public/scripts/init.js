@@ -19,6 +19,16 @@ myApp.config(['NgAdminConfigurationProvider', 'RestangularProvider', function(Ng
         }
         return { params: params };
     });
+
+     RestangularProvider.addFullRequestInterceptor(function(element, operation, what, url, headers, params, httpConfig) {
+        if (operation == 'getList') {
+            params.sort = (params._sortDir === 'ASC' ? '' : '-') + params._sortField;
+
+            delete params._sortDir;
+            delete params._sortField;
+        }
+        return { params: params };
+    });
 }]);
 
 // var user = prompt('User');
