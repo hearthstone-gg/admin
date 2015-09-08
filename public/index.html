@@ -17,7 +17,7 @@
     }).responseText); 
 
     var myApp = angular.module('myApp', ['ng-admin']);
-    myApp.config(['NgAdminConfigurationProvider', function(NgAdminConfigurationProvider) {
+    myApp.config(['NgAdminConfigurationProvider', 'RestangularProvider', function(NgAdminConfigurationProvider, RestangularProvider) {
             
             var nga = NgAdminConfigurationProvider;
             // create an admin application
@@ -86,7 +86,8 @@
                     nga.field('updated', 'date').label('updated').format('MM/dd HH:mm').editable(false),
                     nga.field('created', 'date').label('created').format('MM/dd HH:mm').editable(false),
                 ])
-                .listActions(['show', 'edit', 'delete']);
+                .listActions(['show', 'edit', 'delete'])
+                .perPage(25);
 
             game.editionView().fields([
                 game.listView().fields(), // reuse fields from another view in another order
@@ -108,7 +109,19 @@
             // dashboard factory function
             var dashboard = nga.dashboard();
 
-            
+
+            RestangularProvider.addFullRequestInterceptor(function(element, operation, what, url, headers, params, httpConfig) {
+                console.log('adding', arguments)
+                if (operation == 'getList') {
+                    params.skip = (params._page - 1) * params._perPage
+                    params.limit = params._perPage
+
+                    delete params._page;
+                    delete params._perPage;
+                }
+                return { params: params };
+            });
+
             // more configuation here later
             // ...
             // attach the admin application to the DOM and run it
