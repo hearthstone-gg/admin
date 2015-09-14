@@ -25,6 +25,8 @@
             nga.field('_id').label('ID'),
             nga.field('status').label('Status'),
             nga.field('opponentName').label('Opponent'),
+            nga.field('playerClass').label('Class'),
+            nga.field('opponentClass').label('Opponent Class'),
             nga.field('created', 'date').label('created').format('MM/dd HH:mm').editable(false),
         ])
         .perPage(5)

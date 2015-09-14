@@ -20,6 +20,8 @@ myApp.config(['NgAdminConfigurationProvider', function(NgAdminConfigurationProvi
         }, ]),
         nga.field('name').label('reporter'),
         nga.field('opponentName').label('opponent'),
+        nga.field('playerClass').label('class'),
+        nga.field('opponentClass').label('opponent class')
     ]);
 
     game.listView()
