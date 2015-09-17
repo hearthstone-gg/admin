@@ -27,7 +27,6 @@ myApp.config(['NgAdminConfigurationProvider', function(NgAdminConfigurationProvi
     game.listView()
         .title('Games').fields([
             game.creationView().fields(), // reuse fields from another view in another order
-            nga.field('_id').label('id').editable(false),
             nga.field('updated', 'date').label('updated').format('MM/dd HH:mm').editable(false),
             nga.field('created', 'date').label('created').format('MM/dd HH:mm').editable(false),
             nga.field('processed', 'boolean').label('processed')
@@ -36,10 +35,12 @@ myApp.config(['NgAdminConfigurationProvider', function(NgAdminConfigurationProvi
         .perPage(25);
 
     game.editionView().fields([
+        nga.field('_id').label('id').editable(false),
         game.listView().fields(), // reuse fields from another view in another order
     ]).title('Edit {{ entry.values["_id"] }}');
 
     game.showView().fields([
+        nga.field('_id').label('id').editable(false),
         game.listView().fields(), // reuse fields from another view in another order
     ]);
 
